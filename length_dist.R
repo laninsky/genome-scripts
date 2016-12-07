@@ -5,7 +5,7 @@ linestoremove <- which(temp[,1]=="circular")
 temp <- as.matrix(temp[-(linestoremove),1],ncol=1)
 lengths <- nchar(temp[(seq(2,(dim(temp)[1]),2)),1])
 
-# Discovar outputs "circular" as an additional header for some of the contigs, and potentially there are other
+# Discovar outputs "circular" as an additional header separated by a space from the sequence name for some of the contigs (removed in the code above), and potentially there are other "weird things" that I haven't caught in terms of naming scaffolds etc, so this is just double-checking that everything we think is a contig name has the ">" at the start.
 names <- (temp[(seq(1,(dim(temp)[1]),2)),1])
 test <- grep(">",names[1:length(names)])
 if (length(test)==length(names)) {
