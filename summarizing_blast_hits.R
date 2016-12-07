@@ -1,3 +1,5 @@
+# This script can be run to summarize the results of linebylineblast.sh
+
 library(plyr)
 intable <- read.table("blastoutput.txt",header=TRUE)
 counts <- ddply(intable, .(intable$seqid, intable$scaffold_length), nrow)
