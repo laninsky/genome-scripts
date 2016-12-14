@@ -42,7 +42,7 @@ for (i in scaffoldnames) {
       if((subscaff[j,1]>=tempscaff[1,(dim(tempscaff)[2])]) && (subscaff[j,1]<tempscaff[2,(dim(tempscaff)[2])]) && (subscaff[j,2]>tempscaff[1,(dim(tempscaff)[2])]) && (subscaff[j,2]<=tempscaff[2,(dim(tempscaff)[2])])) {
         break
       } else {
-        if((subscaff[j,1]>=tempscaff[1,(dim(tempscaff)[2])]) && (subscaff[j,1]<=(tempscaff[2,(dim(tempscaff)[2])]+50))) {
+        if((subscaff[j,1]>=tempscaff[1,(dim(tempscaff)[2])]) && (subscaff[j,1]<=(tempscaff[2,(dim(tempscaff)[2])]+200))) {
           tempscaff[2,(dim(tempscaff)[2])] <- subscaff[j,2]
           break
         }
@@ -63,3 +63,5 @@ for (i in scaffoldnames) {
 range_to_delete[which(scaffoldnames==i),2] <- to_delete
 
 } 
+
+
