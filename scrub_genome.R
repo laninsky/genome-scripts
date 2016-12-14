@@ -65,3 +65,5 @@ range_to_delete[which(scaffoldnames==i),2] <- to_delete
 } 
 
 
+https://stat.ethz.ch/pipermail/r-help/2003-April/033097.html
+
