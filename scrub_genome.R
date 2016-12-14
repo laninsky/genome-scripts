@@ -10,19 +10,36 @@ range_to_delete <- matrix(nrow=(length(scaffoldnames)),ncol=2)
 range_to_delete[,1] <- scaffoldnames
 
 for (i in scaffoldnames) {
-subscaff <- contam[(which(contam[,2]==i)),9:10]
+  subscaff <- contam[(which(contam[,2]==i)),9:10]
 
-for (j in 1:(dim(subscaff)[1])) {
-if(as.numeric(subscaff[j,1])>as.numeric(subscaff[j,2])) {
-tempsubscaff <- subscaff[j,1]
-subscaff[j,1] <- subscaff[j,2]
-subscaff[j,2] <- tempsubscaff
-}
-}
-
-
-for (j in 1:(dim(subscaff)[1])) {
-
+  if (!(is.matrix(subscaff))) {  
+        if(as.numeric(subscaff[1])>as.numeric(subscaff[2])) {
+          tempsubscaff <- subscaff[1]
+          subscaff[1] <- subscaff[2]
+          subscaff[2] <- tempsubscaff
+        }
+    to_delete <- paste(as.numeric(subscaff[1]),":",as.numeric(subscaff[2]),sep="")
+  
+  } else {
+   
+    for (j in 1:(dim(subscaff)[1])) {
+      if(as.numeric(subscaff[j,1])>as.numeric(subscaff[j,2])) {
+        tempsubscaff <- subscaff[j,1]
+        subscaff[j,1] <- subscaff[j,2]
+        subscaff[j,2] <- tempsubscaff
+      }
+    }
+    
+    subscaff[,1] <- as.numeric(subscaff[,1])
+    subscaff[,2] <- as.numeric(subscaff[,2])
+    subscaff <- subscaff[(order(subscaff[,2])),]
+    subscaff <- subscaff[(order(subscaff[,1])),]
+    
+    tempscaff <- as.matrix(subscaff[1,],nrow=2)
+    
+    for (j in 2:(dim(subscaff)[1])) {
+      if(subscaff[j,1]<tempscaff[2,(dim(tempscaff[
+  }
 
 
 
