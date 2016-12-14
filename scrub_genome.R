@@ -3,6 +3,7 @@ contam <- contam[(which(as.numeric(contam[,11])<=0.001)),]
 
 table_contams <- as.matrix(table(contam[,1]))
 write.table(table_contams,"freq_of_contam_matches.txt")
+write.table(contam,"identity_of_contam_matches.txt")
 
 scaffoldnames <- names(table(contam[,2]))
 
@@ -63,6 +64,15 @@ for (i in scaffoldnames) {
 range_to_delete[which(scaffoldnames==i),2] <- to_delete
 
 } 
+
+rm(contam)
+rm(table_contams)
+rm(temp)
+rm(to_delete)
+rm(scaffoldnames)
+rm(tempscaff)
+rm(subscaff)
+rm(tempsubscaff)
 
 
 https://stat.ethz.ch/pipermail/r-help/2003-April/033097.html
