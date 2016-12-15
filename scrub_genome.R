@@ -179,6 +179,8 @@ sequencelength <- nchar(sequencerec)
     write.table(sequencerec,"scrubbed_genome.fasta",append=TRUE,quote=FALSE,row.names=FALSE,col.names=FALSE)
   }
 
+write.table(range_to_delete,"ranges_deleted_from_scaffolds.txt",append=TRUE,quote=FALSE,row.names=FALSE,col.names=FALSE)
+
 #Closing the connection to the file
 close(con)
 
