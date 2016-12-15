@@ -53,14 +53,15 @@ for (i in scaffoldnames) {
     #Looping through the remaining ranges. Where these ranges overlap, or are within 200 bp of each other, extending the sequence to move out over the overlapping segments
     for (j in 2:(dim(subscaff)[1])) {
       if((subscaff[j,1]>=tempscaff[1,(dim(tempscaff)[2])]) && (subscaff[j,1]<tempscaff[2,(dim(tempscaff)[2])]) && (subscaff[j,2]>tempscaff[1,(dim(tempscaff)[2])]) && (subscaff[j,2]<=tempscaff[2,(dim(tempscaff)[2])])) {
-        break
+        next
       } else {
         if((subscaff[j,1]>=tempscaff[1,(dim(tempscaff)[2])]) && (subscaff[j,1]<=(tempscaff[2,(dim(tempscaff)[2])]+200))) {
           tempscaff[2,(dim(tempscaff)[2])] <- subscaff[j,2]
-          break
+          next
         }
         temp <- rbind(subscaff[j,1],subscaff[j,2])
         tempscaff <- cbind(tempscaff,temp)
+        print("binding!")
       }
     }
   
