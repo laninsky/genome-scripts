@@ -74,6 +74,55 @@ rm(tempscaff)
 rm(subscaff)
 rm(tempsubscaff)
 
+lengthdist <- matrix(c("scaffoldname","length","non-N-length"),ncol=3)
+write.table(lengthdist,"name_lengths_Ns.txt",append=FALSE,quote=FALSE,row.names=FALSE,col.names=FALSE)
+
+sequencerec <- NULL
+
+filename <- as.matrix(read.table("temp"))
+con <- file(filename[1,1])
+open(con)
+
+  while ( TRUE ) {
+    line = readLines(con, n = 1)
+    if ( length(line) == 0 ) {
+      break
+    }
+    if (grepl(">",line,fixed=TRUE) && (!(is.null(sequencerec)))) {
+        if (gsub(">","",seqname,fixed=TRUE) %in% range_to_delete[,1]) {
+        sequencerec <- unlist(strsplit(sequencerec,split=""))
+        
+        toremove <- unlist(strsplit(range_to_delete[(which(range_to_delete[,1]==gsub(">","",seqname,fixed=TRUE))),2],split=","))
+        toremovemod <- NULL  
+        for (i in toremove) {
+            temp <- as.numeric(unlist(strsplit(i,split=":")))
+            toremovemod <- c(toremovemod,temp[1]:temp[2])
+        }
+        
+        sequencerec <- sequencerec[-toremovemod]
+        sequencerec <- paste(sequencerec,collapse="")
+      }
+      sequencelength <- nchar(sequencerec)
+      if(sequencelength>=100) {
+        sequencelengthN <- nchar(gsub("N","",sequencerec,fixed=TRUE))
+        lengthdist <- c(seqname,sequencelength,sequencelengthN)
+        write.table(lengthdist,"name_lengths_Ns.txt",append=TRUE,quote=FALSE,row.names=FALSE,col.names=FALSE)
+          
+        
+
+        
+        
+        
+    
+        
+    seqname <- line    
+    }
+
+
+
+  
+close(con)
+
 
 https://stat.ethz.ch/pipermail/r-help/2003-April/033097.html
 
