@@ -61,7 +61,6 @@ for (i in scaffoldnames) {
         }
         temp <- rbind(subscaff[j,1],subscaff[j,2])
         tempscaff <- cbind(tempscaff,temp)
-        print("binding!")
       }
     }
   
