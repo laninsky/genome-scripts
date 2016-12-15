@@ -115,21 +115,21 @@ while ( TRUE ) {
         #If the previous contig needs to be scrubbed for contamination
         if (gsub(">","",seqname,fixed=TRUE) %in% range_to_delete[,1]) {
         
-        #Splitting the DNA string into a vector so we can extract the contaminated positions
-        sequencerec <- unlist(strsplit(sequencerec,split=""))
+          #Splitting the DNA string into a vector so we can extract the contaminated positions
+          sequencerec <- unlist(strsplit(sequencerec,split=""))
         
-        #Obtaining the contaminated positions in an array from the range_to_delete matrix  
-        toremove <- unlist(strsplit(range_to_delete[(which(range_to_delete[,1]==gsub(">","",seqname,fixed=TRUE))),2],split=","))
-        toremovemod <- NULL  
-        for (i in toremove) {
+          #Obtaining the contaminated positions in an array from the range_to_delete matrix  
+          toremove <- unlist(strsplit(range_to_delete[(which(range_to_delete[,1]==gsub(">","",seqname,fixed=TRUE))),2],split=","))
+          toremovemod <- NULL  
+          for (i in toremove) {
             temp <- as.numeric(unlist(strsplit(i,split=":")))
             toremovemod <- c(toremovemod,temp[1]:temp[2])
-        }
+          }
         
         #Removing those positions and collapsing the sequence back into a single string
-        sequencerec <- sequencerec[-toremovemod]
-        sequencerec <- paste(sequencerec,collapse="")
-      }
+          sequencerec <- sequencerec[-toremovemod]
+          sequencerec <- paste(sequencerec,collapse="")
+        }
       #Getting the length of the sequence
       sequencelength <- nchar(sequencerec)
       
@@ -143,7 +143,7 @@ while ( TRUE ) {
       }
       #resetting the sequencerec value ang changing the sequencename to the line we just read in
       sequencerec <- NULL
-      sequencename <- line
+      seqname <- line
     } else {
         #or else, if we didn't grep ">", appending sequence to the previous sequence
         if (!(grepl(">",line,fixed=TRUE))) {
