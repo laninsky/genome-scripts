@@ -15,8 +15,11 @@ tail -n -1 name_lengths_Ns.txt > test
 less test #To make sure everything looks good before you over-write name_lengths_Ns.txt
 mv test name_lengths_Ns.txt
 
-#We then need to modify our input genome file. Search for the name of the last sequence (that we have now deleted from the scrubbed_genome.fasta file), and find the line number of this in the original genome assembly file e.g. 49976687
-head -n -49976687 trunk_anole_19Jun2016_xkeD9.fasta > test
+#We then need to modify our input genome file. Search for the name of the last sequence (that we have now deleted from the scrubbed_genome.fasta file), and find the line number of this in the original genome assembly file e.g. 49976687. In the code below, replace trunk_anole_19Jun2016_xkeD9.fasta with the name of your assembly, and the number on lastlines with the line number of the last sequence in your original genome assembly.
+totalline=`wc -l trunk_anole_19Jun2016_xkeD9.fasta | awk '{print $1}'`
+lastlines=$(($totalline-49976687+1))
+
+tail -n $lastlines trunk_anole_19Jun2016_xkeD9.fasta > test
 less test #To make sure everything looks good before you move to mod.fasta
 mv test mod.fasta
 
