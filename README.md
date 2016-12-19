@@ -12,3 +12,7 @@ linebylineblast.sh (and the associated R-scripts: onelining_tempseq.R and lineby
 summarizing_blast_hits.R summarizes the results of linebylineblast.sh
 
 length_dist.R can be used to get the lengths of the contigs/scaffolds in the assembly and to generate histogram summaries of this data, as well as the percentage of the assembly located in each contig/scaffold length bin.
+
+vectorcontam.sh (and the associated R-script: scrub_genome.R): searches your genome for contamination, and scrubs this from the genome, outputting contigs/scaffolds greater than 100 bp in size.
+
+restart_vector_contam.sh (and the associated R-script: restart_scrub_genome.R): how to restart vectorcontam.sh if the job crashes part-way through.
