@@ -24,5 +24,9 @@ mv test mod.fasta
 genome=mod.fasta
 echo $genome > temp
 
+#Making a backup just in case anything goes wrong
+cp scrubbed_genome.fasta backup_scrubbed_genome.fasta
+cp name_lengths_Ns.txt backup_name_lengths_Ns.txt
+
 #Rscript for removing portions of scaffolds 
 Rscript restart_scrub_genome.R
