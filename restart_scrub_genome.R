@@ -1,3 +1,88 @@
+#Reading in the file with our vector contamination matches, and taking just the matches at an evalue of 0.001 or less
+contam <- as.matrix(read.table("univecblast.txt"))
+contam <- contam[(which(as.numeric(contam[,11])<=0.001)),]
+
+#Getting a list of the scaffold names with identified contamination and setting up a matrix to record the positions in the scaffold we need to delete
+scaffoldnames <- names(table(contam[,2]))
+range_to_delete <- matrix(nrow=(length(scaffoldnames)),ncol=2)
+range_to_delete[,1] <- scaffoldnames
+
+#A loop to record the ranges we need to delete for each scaffold
+for (i in scaffoldnames) {
+  to_delete <- NULL
+
+  #Positions 9 and 10 have the start and end of the match to the subject
+  subscaff <- contam[(which(contam[,2]==i)),9:10]
+
+  #Where only one stretch of contamination is found, this if loop is used
+  if (!(is.matrix(subscaff))) {  
+        #For matches to the reverse strand, this swaps the beginning and end coordinates
+        if(as.numeric(subscaff[1])>as.numeric(subscaff[2])) {
+          tempsubscaff <- subscaff[1]
+          subscaff[1] <- subscaff[2]
+          subscaff[2] <- tempsubscaff
+        }
+    #Recording beginning and end coordinates in a temporary vector
+    to_delete <- paste(as.numeric(subscaff[1]),":",as.numeric(subscaff[2]),sep="")
+  
+  #If there is more than one stretch of contamination, this loop is used
+  } else {
+    #Converting the matrix to numerical values
+    subscaff <- cbind(as.numeric(subscaff[,1]),as.numeric(subscaff[,2]))
+    
+    #Reversing the order of the beginning and end coordinates where matches to reverse strand occured
+    for (j in 1:(dim(subscaff)[1])) {
+      if(subscaff[j,1]>subscaff[j,2]) {
+        tempsubscaff <- subscaff[j,1]
+        subscaff[j,1] <- subscaff[j,2]
+        subscaff[j,2] <- tempsubscaff
+      }
+    }
+    #Ordering the matrix of matches from beginning of scaffold to end of scaffold, sorted first on beginning and then on end coordinates
+    subscaff <- subscaff[order(subscaff[,2]),]
+    subscaff <- subscaff[order(subscaff[,1]),]
+    
+    #Taking the first coordinates
+    tempscaff <- as.matrix(subscaff[1,],nrow=2)
+    
+    #Looping through the remaining ranges. Where these ranges overlap, or are within 200 bp of each other, extending the sequence to move out over the overlapping segments
+    for (j in 2:(dim(subscaff)[1])) {
+      if((subscaff[j,1]>=tempscaff[1,(dim(tempscaff)[2])]) && (subscaff[j,1]<tempscaff[2,(dim(tempscaff)[2])]) && (subscaff[j,2]>tempscaff[1,(dim(tempscaff)[2])]) && (subscaff[j,2]<=tempscaff[2,(dim(tempscaff)[2])])) {
+        next
+      } else {
+        if((subscaff[j,1]>=tempscaff[1,(dim(tempscaff)[2])]) && (subscaff[j,1]<=(tempscaff[2,(dim(tempscaff)[2])]+200))) {
+          tempscaff[2,(dim(tempscaff)[2])] <- subscaff[j,2]
+          next
+        }
+        temp <- rbind(subscaff[j,1],subscaff[j,2])
+        tempscaff <- cbind(tempscaff,temp)
+      }
+    }
+  
+   to_delete <- paste(tempscaff[1,1],":",tempscaff[2,1],sep="")
+   
+   #If, after combining overlapping (or nearby) ranges, there are still more than one stretches of separate contamination identified, mushing these into a single string to write out
+   if(dim(tempscaff)[2]>1) { 
+      for (j in 2:(dim(tempscaff)[2])) {
+        to_delete <- paste(to_delete,paste(tempscaff[1,j],":",tempscaff[2,j],sep=""),sep=",")
+      } 
+   }
+      
+      }
+#Adding the stretches to delete to the appropriate row  
+range_to_delete[which(scaffoldnames==i),2] <- to_delete
+
+} 
+
+#Removing variables not needed for the second part of this script
+rm(contam)
+rm(temp)
+rm(to_delete)
+rm(scaffoldnames)
+rm(tempscaff)
+rm(subscaff)
+rm(tempsubscaff)
+
 #Setting the variable to record sequence (we are going to write out all the sequence on one line for each scaffold, rather than having linebreaks in teh sequence)
 sequencerec <- NULL
 
