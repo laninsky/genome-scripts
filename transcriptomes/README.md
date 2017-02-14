@@ -68,7 +68,7 @@ Step 6B: QC of transcriptome assembly: Full-length transcript analysis for model
 
 Step 6C: QC of transcriptome assembly: Using BUSCO to look at presence of conserved orthologs
 ```
- python3 /public/BUSCO_v1.22/BUSCO_v1.22.py -o busco_brain -in trinity_out_dir.Trinity.fasta -l /public/BUSCO_v1.22/buscolib/vertebrata/ -m trans
+ python2 /public/BUSCO_v1.22/BUSCO_v1.22.py -o busco_brain -in trinity_out_dir.Trinity.fasta -l /public/BUSCO_v1.22/buscolib/vertebrata/ -m trans
 ```
 
 Step 6D: QC of transcriptome assembly: The Transcriptome Contig Nx Statistic
