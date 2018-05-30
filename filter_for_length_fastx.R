@@ -1,12 +1,18 @@
-filter_contig_by_length <- function(fastx,file_to_filter,contig_length) {
+filter_for_length_fastx <- function(fastx,file_to_filter,contig_length) {
 
 if(missing(file_to_filter) | missing(contig_length)) {
-  print(paste("This script needs you to define the location and name of your fasta file and the minimum contig length you want to retain in the outfile: length_filtered_genome.fasta"))
+  print(paste("This script needs you to define the location and name of your fastx file and the minimum contig length you want to retain in the outfile: length_filtered_genome.fasta"))
   print(paste("Example of calling filter_contig_by_length:"))
-  cat('filter_contig_by_length("/mnt/anolis/Braker/scrubbed_genome.fasta.masked",1000)\n\n')
+  cat('filter_for_length_fastx("robin_genome_28May2018.fastx",2000)\n\n')
   stop("Please fill in the missing info in your function call")
 }
-    
+
+library(dplyr)
+library(readr)
+temp <- read_delim("robin_genome_28May2018.fastx",col_names=FALSE,delim=" ")
+
+test <- mutate(temp,nchar(temp[,2]))  
+  
 #Setting the variable to record sequence (we are going to write out all the sequence on one line for each scaffold, rather than having linebreaks in teh sequence)
 sequencerec <- NULL
 
