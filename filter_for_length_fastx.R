@@ -1,4 +1,7 @@
-filter_for_length_fastx <- function(fastx,file_to_filter,contig_length) {
+#file_to_filter <- "robin_genome_28May2018.fastx"
+# temp <- temp[600000:600010,]
+
+filter_for_length_fastx <- function(file_to_filter,contig_length) {
 
 if(missing(file_to_filter) | missing(contig_length)) {
   print(paste("This script needs you to define the location and name of your fastx file and the minimum contig length you want to retain in the outfile: length_filtered_genome.fasta"))
@@ -9,9 +12,26 @@ if(missing(file_to_filter) | missing(contig_length)) {
 
 library(dplyr)
 library(readr)
-temp <- read_delim("robin_genome_28May2018.fastx",col_names=FALSE,delim=" ")
+library(stringr)
+  
+#Reading in the fastx file  
+temp <- read_delim(file_to_filter,col_names=FALSE,delim="\t")
 
-test <- mutate(temp,nchar(temp[,2]))  
+#Creating a column with the sequence length and number of Ns for each contig
+temp <- temp %>% mutate(seq_length = str_length(X2))
+temp <- temp %>% mutate(no_of_Ns = str_length(gsub("N","",X2,fixed=TRUE)))
+
+  
+  
+  
+  
+temp <- mutate(temp,nchar(temp[,2]))
+temp <- mutate(temp, str_length(gsub("N","",X2,fixed=TRUE)))  
+
+names(temp) <- c("scaffold_name","sequence","length","no_of_Ns")  
+
+#Writing out the length of each scaffold/contig
+write.table(temp[,c(1,3)],  
   
 #Setting the variable to record sequence (we are going to write out all the sequence on one line for each scaffold, rather than having linebreaks in teh sequence)
 sequencerec <- NULL
