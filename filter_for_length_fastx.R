@@ -1,5 +1,6 @@
 #file_to_filter <- "robin_genome_28May2018.fastx"
 # temp <- temp[600000:600010,]
+# contig_length <- 201
 
 filter_for_length_fastx <- function(file_to_filter,contig_length) {
 
@@ -20,18 +21,15 @@ temp <- read_delim(file_to_filter,col_names=FALSE,delim="\t")
 #Creating a column with the sequence length and number of Ns for each contig
 temp <- temp %>% mutate(seq_length = str_length(X2))
 temp <- temp %>% mutate(no_of_Ns = str_length(gsub("N","",X2,fixed=TRUE)))
+names(temp) <- c("scaffold_name","sequence","length","length_without_Ns")  
 
+#Writing out the length of each scaffold/contig and number of Ns
+write.table(temp[,c(1,3,4)],"name_lengths_Ns_filtered.txt",quote=FALSE,row.names=FALSE)
   
-  
-  
-  
-temp <- mutate(temp,nchar(temp[,2]))
-temp <- mutate(temp, str_length(gsub("N","",X2,fixed=TRUE)))  
+#Filtering for scaffold/contigs above the minimum size
 
-names(temp) <- c("scaffold_name","sequence","length","no_of_Ns")  
-
-#Writing out the length of each scaffold/contig
-write.table(temp[,c(1,3)],  
+test <- temp %>% filter(.,length>=contig_length)   
+  
   
 #Setting the variable to record sequence (we are going to write out all the sequence on one line for each scaffold, rather than having linebreaks in teh sequence)
 sequencerec <- NULL
