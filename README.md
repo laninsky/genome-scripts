@@ -5,6 +5,7 @@ Some hodge podge scripts for dealing with genome stuff
 This folder contains instructions on the KU BI transcriptome pipeline
 
 #Other stuff
+
 filter_for_length_fastx.R filters scaffolds/contigs below a certain length, and also reports total assembly size/number of contigs, N10-N90/L10-L90. It requires a fastx file as input, which you can generate using fastx-tool's fasta_formatter with the -t flag. Paste the R-script into R and then call it by filter_for_length_fastx(your_fastx_file,contig_length).
 
 filter_contig_by_length.R does the same thing but using a fasta file as input. It is MUCH slower than filter_for_length_fastx.R, so is not recommended. 
