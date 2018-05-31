@@ -1,7 +1,3 @@
-#file_to_filter <- "robin_genome_28May2018.fastx"
-# temp <- temp[600000:600010,]
-# contig_length <- 201
-
 filter_for_length_fastx <- function(file_to_filter,contig_length) {
 
 if(missing(file_to_filter) | missing(contig_length)) {
@@ -168,3 +164,4 @@ output[(seq(2,(dim(output)[1]),2)),1] <- as.matrix(temp[(1:dim(temp)[1]),2])
 #Writing this out
 write.table(output,paste(file_to_filter,".",contig_length,"bp_filtered.fa",sep=""),quote=FALSE,col.names=FALSE,row.names=FALSE)
   
+}
