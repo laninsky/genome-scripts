@@ -23,7 +23,7 @@ Step 3: make a log directory
 mkdir logs
 ```
 
-Step 4A: run cutadapt: discard reads <25 bp in length (otherwise Trinity will fail because its kmer = 25) and perform very gentle trimming (following http://journal.frontiersin.org/article/10.3389/fgene.2014.00013/full)
+Step 4A: run cutadapt: discard reads <25 bp in length (otherwise Trinity will fail because its kmer = 25) and perform very gentle trimming (following http://journal.frontiersin.org/article/10.3389/fgene.2014.00013/full). Note: recently while processing some other samples, I saw the following on cutadapt's documentation: "Previous versions of this document also recommended using AGATCGGAAGAGC as adapter sequence for both read 1 and read 2, but you should avoid doing so as that sequence occurs multiple times in the human genome." (https://cutadapt.readthedocs.io/en/stable/guide.html). For future projects it would be best to use AGATCGGAAGAGCACACGTCTGAACTCCAGTCA as adapter sequence for read 1 and AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT for read 2, as per cutadapt's recommendations. 
 ```
 #PBS -N cutadapt.sh
 #PBS -l nodes=1:ppn=1:avx,mem=16000m,walltime=5:00:00
