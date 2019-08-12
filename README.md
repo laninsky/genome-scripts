@@ -1,11 +1,10 @@
 # genome-scripts
 Some hodge podge scripts for dealing with genome stuff
 
-#Transcriptomes
+### Transcriptomes
 This folder contains instructions on the KU BI transcriptome pipeline
 
-#Other stuff
-
+#### Other stuff
 filter_for_length_fastx.R filters scaffolds/contigs below a certain length, and also reports total assembly size/number of contigs, N10-N90/L10-L90. It requires a fastx file as input, which you can generate using fastx-tool's fasta_formatter with the -t flag. Paste the R-script into R and then call it by filter_for_length_fastx(your_fastx_file,contig_length).
 
 filter_contig_by_length.R does the same thing but using a fasta file as input. It is MUCH slower than filter_for_length_fastx.R, so is not recommended. 
@@ -21,3 +20,15 @@ length_dist.R can be used to get the lengths of the contigs/scaffolds in the ass
 vectorcontam.sh (and the associated R-script: scrub_genome.R): searches your genome for contamination, and scrubs this from the genome, outputting contigs/scaffolds greater than 100 bp in size.
 
 restart_vector_contam.sh (and the associated R-script: restart_scrub_genome.R): how to restart vectorcontam.sh if the job crashes part-way through.
+
+### Version history
+Published with Anolis TBD
+
+These scripts wouldn't be possible without:  
+R: R Core Team. 2015. R: A language and environment for statistical computing. URL http://www.R-project.org/. R Foundation for Statistical Computing, Vienna, Austria. https://www.r-project.org/
+
+Wickham, H., Francois, R., Henry, L. and Müller, K., dplyr: A grammar of data manipulation.  
+
+Wickham, H., Hester, J. and Francois, R., Readr: Read rectangular text data.  
+
+Wickham H. stringr: Simple, Consistent Wrappers for Common String Operations.
